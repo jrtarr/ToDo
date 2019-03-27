@@ -9,12 +9,7 @@ const getToDos = function(){
 }
 
 // Save todos to localStorage
-const saveToDos = function(textValue){
-    todos.push({
-        id: uuidv4(),
-        text: textValue,
-        completed: false
-    })
+const saveToDos = function(todos){
     localStorage.setItem('todos',JSON.stringify(todos))
 }
 
@@ -27,6 +22,14 @@ const generateToDoDOM = function(todo){
     //Create Completed Checkbox
     const checkBox = document.createElement('input')
     checkBox.setAttribute('type','checkbox')
+    if(todo.completed){
+        checkBox.checked = true
+    }
+    checkBox.addEventListener('change',function(e){
+        markComplete(todo.id)
+        saveToDos(todos)
+        renderToDos(todos,filters)
+    })
 
     // Create todo text
     const newToDo = document.createElement('span')
@@ -36,6 +39,12 @@ const generateToDoDOM = function(todo){
     const removeButton = document.createElement('button')
     removeButton.classList.add('remove-button')
     removeButton.textContent = 'x'
+    removeButton.addEventListener('click',function(){
+        removeTodo(todo.id)
+        saveToDos(todos)
+        renderToDos(todos,filters)
+    })
+
     // Add the DOM Elements  
     todoParent.appendChild(checkBox)
     todoParent.appendChild(newToDo)
@@ -73,3 +82,23 @@ const renderToDos = function(todos, filters){
         document.querySelector('#todo-container').appendChild(generateToDoDOM(todo))
     })
 } 
+
+// Remove ToDo
+const removeTodo = function(uuid){
+    const i = todos.findIndex(function(todo){
+        return todo.id === uuid
+    })
+    if (i > -1){
+        todos.splice(i,1)
+    }
+}
+
+// Adjust values based on checkbox
+function markComplete(id){
+    const toChange = todos.find(function(todo){
+        return todo.id === id
+    })
+    if (toChange !== undefined){
+        toChange.completed = !toChange.completed
+    }
+}

@@ -4,9 +4,6 @@ const filters = {
     searchtext: '',
     filterCompleted: false
 }
-console.log(todos)
-todos = []
-console.log(todos)
 renderToDos(todos,filters) //Initial render
 
 //Event Listeners
@@ -18,7 +15,12 @@ document.querySelector('#filter-todo').addEventListener('input',function(e){
 
 document.querySelector('#new-todo').addEventListener('submit',function(e){
     e.preventDefault()
-    saveToDos(e.target.elements.newToDo.value)
+    todos.push({
+        id: uuidv4(),
+        text: e.target.elements.newToDo.value,
+        completed: false
+    })
+    saveToDos(todos)
     e.target.elements.newToDo.value = ''
     renderToDos(todos,filters)
 })
