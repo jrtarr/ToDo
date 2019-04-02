@@ -1,10 +1,10 @@
 // Read todos from localStorage
 const getToDos = () => {
     const todoJSON = localStorage.getItem('todos')
-    if(todoJSON !== null){
-        return JSON.parse(todoJSON)
-    }else{
-        return []
+    try{
+        return todoJSON ? JSON.parse(todoJSON) : []
+    }catch (e){
+        return [] 
     }
 }
 
@@ -92,7 +92,7 @@ const removeTodo = (uuid) => {
 // Adjust values based on checkbox
 const markComplete = (id) => {
     const toChange = todos.find((todo) => todo.id === id)
-    if (toChange !== undefined){
+    if (toChange){
         toChange.completed = !toChange.completed
     }
 }
