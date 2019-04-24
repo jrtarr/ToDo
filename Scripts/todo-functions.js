@@ -16,12 +16,16 @@ const saveToDos = (todos) => {
 // Generate new ToDo DOM Structure
 const generateToDoDOM = (todo) => {
     //Create containing parent div
-    const todoParent = document.createElement('div')
-    todoParent.classList.add('todo')
+    const todoParent = document.createElement('label')
+    todoParent.classList.add('list-item')
     
+    const containerEl = document.createElement('div')
+    containerEl.classList.add('list-item__container')
+
     //Create Completed Checkbox
     const checkBox = document.createElement('input')
     checkBox.setAttribute('type','checkbox')
+    checkBox.classList.add('checkbox')
     if(todo.completed){
         checkBox.checked = true
     }
@@ -33,11 +37,12 @@ const generateToDoDOM = (todo) => {
 
     // Create todo text
     const newToDo = document.createElement('span')
+    newToDo.classList.add('list-item__title')
     newToDo.textContent = todo.text
 
     //Create remove button
     const removeButton = document.createElement('button')
-    removeButton.classList.add('remove-button')
+    removeButton.classList.add('button','button--text')
     removeButton.textContent = 'x'
     removeButton.addEventListener('click',() => {
         removeTodo(todo.id)
@@ -46,8 +51,9 @@ const generateToDoDOM = (todo) => {
     })
 
     // Add the DOM Elements  
-    todoParent.appendChild(checkBox)
-    todoParent.appendChild(newToDo)
+    containerEl.appendChild(checkBox)
+    containerEl.appendChild(newToDo)
+    todoParent.appendChild(containerEl)
     todoParent.appendChild(removeButton)
     return todoParent
 }
@@ -56,7 +62,10 @@ const generateToDoDOM = (todo) => {
 const generateSummaryDOM = (filtToDos) => {
     const incompleteToDos = filtToDos.filter((todo) => !todo.completed)
     const summary = document.createElement('h2')
-    summary.textContent = `You have ${incompleteToDos.length} items left on your To Do list:` 
+    summary.classList.add('list-title')
+    let plural
+    incompleteToDos.length === 1 ? plural = '' : plural = 's'
+    summary.textContent = `You have ${incompleteToDos.length} todo${plural} left:` 
     return summary
 }
 
@@ -76,9 +85,16 @@ const renderToDos = (todos, filters) => {
     document.querySelector('#todo-container').appendChild(generateSummaryDOM(filtToDos))
 
     //Render ToDos based on filter
-    filtToDos.forEach((todo) => {
-        document.querySelector('#todo-container').appendChild(generateToDoDOM(todo))
-    })
+    if (filtToDos.length){
+        filtToDos.forEach((todo) => {
+            document.querySelector('#todo-container').appendChild(generateToDoDOM(todo))
+        })
+    }else{
+        let emptyMessage = document.createElement('p')
+        emptyMessage.textContent = 'No ToDos to show.'
+        emptyMessage.classList.add('empty-message')
+        document.querySelector('#todo-container').appendChild(emptyMessage)
+    }
 } 
 
 // Remove ToDo

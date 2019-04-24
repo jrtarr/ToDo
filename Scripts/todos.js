@@ -15,14 +15,18 @@ document.querySelector('#filter-todo').addEventListener('input',(e) => {
 
 document.querySelector('#new-todo').addEventListener('submit',(e) => {
     e.preventDefault()
-    todos.push({
-        id: uuidv4(),
-        text: e.target.elements.newToDo.value,
-        completed: false
-    })
-    saveToDos(todos)
+    let text = e.target.elements.newToDo.value.trim()
+    if (text){
+        todos.push({
+            id: uuidv4(),
+            text,
+            completed: false
+        })
+        saveToDos(todos)
+        e.target.elements.newToDo.value = ''
+        renderToDos(todos,filters)
+    }
     e.target.elements.newToDo.value = ''
-    renderToDos(todos,filters)
 })
 
 document.querySelector('#show-incomplete').addEventListener('change',(e) => {

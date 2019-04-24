@@ -5,24 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ToDo List</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="Styles/mead.css">
+    <link rel="icon" href="Img/favicon.png">
 </head>
 <body>
-    <h1>To Do List</h1>
-    <input type="text" id="filter-todo" placeholder="Filter">
-    <label>
-        Only show Incomplete ToDos: <input type="checkbox" id="show-incomplete">
-    </label>
-    <div id="todo-container"></div>
-    <form id="new-todo">
-        <input type="text" name="newToDo" placeholder="Add a New ToDo">
-        <button>Submit</button>
-    </form>
-    <script src="uuid.js"></script>
+    <header class="header">
+        <div class="container">
+            <h1 class='header__title'>To Do List</h1>
+            <h2 class='header__subtitle'>Keep track of your stuff!</h2>
+        </div>
+    </header>
+
+    <div class="actions">
+        <div class="actions__container">
+                <input type="text" id="filter-todo" class='input' placeholder="Filter">
+                <label class='checkbox'>
+                    <input type="checkbox" id="show-incomplete"> Hide Completed
+                </label>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="todo-container"></div>
+        <form id="new-todo">
+            <input type="text" name="newToDo" class='input' placeholder="Add a New ToDo">
+            <button class='button'>Submit</button>
+        </form>
+    </div>
+
+    <script src="Scripts/uuid.js"></script>
     <script>
         uuidv4(); // -> v4 UUID
     </script>
-    <script src='todo-functions.js'></script>
-    <script src='todos.js'></script>
+    <script src='Scripts/todo-functions.js'></script>
+    <script src='Scripts/todos.js'></script>
 </body>
 </html>
