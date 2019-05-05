@@ -1,8 +1,6 @@
-import {getToDos,createToDo} from './todos'
+import {createToDo} from './todos'
 import {renderToDos} from './views.js'
 import {updateFilters} from './filters.js'
-
-let todos = getToDos()
 
 renderToDos() //Initial render
 

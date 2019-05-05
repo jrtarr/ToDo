@@ -17,7 +17,7 @@ const generateToDoDOM = (todo) => {
     if(todo.completed){
         checkBox.checked = true
     }
-    checkBox.addEventListener('change',(e) => {
+    checkBox.addEventListener('change',() => {
         markComplete(todo.id)
     })
 
